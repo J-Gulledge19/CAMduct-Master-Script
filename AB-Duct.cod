@@ -1,0 +1,31 @@
+SELECT ITEM.CID
+CASE=866
+if Item.dims = 3 then
+if Item.cuttype="Decoiled Straight" then
+Dim A = item.dim[1].value
+Dim B = item.dim[2].value
+Dim Prim = (A+B)
+Dim type="4xI,M-F"
+
+ if Prim < 64.5 then
+  item.option["Override"].value = "1 Part Straight"
+  Elseif Prim < 130 then
+    item.option["Override"].value = "2xL"
+  Elseif Prim < 258 then
+    item.option["Override"].value = type
+  endif
+ 
+if B > A then
+ item.dim[1].value = B
+ item.dim[2].value = A
+item.update()
+endif
+
+
+
+endif
+endif
+
+
+item.update()
+ENDSELECT

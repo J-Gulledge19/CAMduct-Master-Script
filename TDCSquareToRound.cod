@@ -1,0 +1,25 @@
+REM ------------------Script---------------------------
+REM TDC Square to Round
+REM ---------------------------------------------------
+
+REM Change square to round connector from duct mate to tdc
+
+SELECT ITEM.CID
+CASE=8
+
+	IF Item.Connector[1].Value = "Ductmate" THEN
+           Item.Connector[1].Value = "TDC"
+	   Item.Update()
+	END IF
+
+	IF Item.Connector[1].Value = "TDC" or Item.Connector[1].Value = "Screwmatic TDC" THEN
+           Item.Option["Cross Break"].Value = "4"
+	END IF
+
+	IF Item.Option["Cross Break"].Value = "4" THEN
+           Item.Option["Seam Position"].Value = "Corner"
+	END IF
+
+Item.Update()
+
+END SELECT

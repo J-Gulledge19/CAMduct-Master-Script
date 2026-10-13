@@ -1,0 +1,14 @@
+REM ------------------Script---------------------------
+REM Change Rnd Seam from Acmelock to 1/2" Lap Female
+REM ---------------------------------------------------
+
+SELECT Item.CID
+  Case 68
+
+  IF Item.Seam[1].Value = "Acmelock" THEN
+     Item.Seam[1].Value = "1/2 Lap Female"
+  END IF
+
+Item.Update()
+
+END SELECT

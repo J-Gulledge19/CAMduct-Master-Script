@@ -1,0 +1,174 @@
+REM ------------------Script 1---------------------------
+REM Change Outside Insulation Status Off
+REM -----------------------------------------------------
+
+IF Item.Insulation.Status="outside" THEN
+   Item.Insulation.Status="off"
+END IF
+
+
+REM ------------------Script 2---------------------------
+REM Change to LargePitts if over 22G
+REM -----------------------------------------------------
+
+IF Item.Gauge > .0312 THEN
+  
+  IF Item.Seam[1] <> NULL THEN 
+     IF Item.Seam[1].Value = "Small Pits" THEN
+        Item.Seam[1].Value = "Large Pits"
+        Item.Seam[1].Locked = TRUE
+     END IF
+  END IF
+ 
+  IF Item.Seam[2] <> NULL THEN	
+     IF Item.Seam[2].Value = "Small Pits" THEN
+        Item.Seam[2].Value = "Large Pits"
+        Item.Seam[2].Locked = TRUE
+     END IF
+  END IF
+
+END IF
+
+
+REM ------------------Script 3---------------------------
+REM Update Gore Count Based on Angle
+REM -----------------------------------------------------
+
+SELECT Item.CID
+  Case 61
+  DIM gores=2
+  DIM angle=item.dim["angle"].value
+    SELECT Angle
+      Case <=40
+        gores=2
+      Case <=60
+        gores=3
+      Case <=90
+        gores=4
+      Case <=120
+        gores=6
+      Case <=180
+        gores=8
+    END SELECT
+  Item.Option["number of segments"].Value=gores
+  Item.Update()
+END SELECT
+
+REM ------------------Script 4---------------------------
+REM Change Spiro to boughtout
+REM -----------------------------------------------------
+
+SELECT Item.CID
+  Case 40
+  IF Item.Boughtout = FALSE THEN 
+     Item.Boughtout = TRUE
+  END IF
+END SELECT
+
+REM ------------------Script 5---------------------------
+REM Change Same Connectors to SE
+REM -----------------------------------------------------
+
+REM Change Collar to SE
+
+ IF Item.Connectors THEN
+
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "Collar" and Item.Connector[3].Value = "Collar" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "Collar" and Item.Connector[2].Value = "Collar" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+   
+REM Change CR to SE
+   
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "CR" and Item.Connector[3].Value = "CR" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "CR" and Item.Connector[2].Value = "CR" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+   
+REM Change CB to SE
+   
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "CB" and Item.Connector[3].Value = "CB" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "CB" and Item.Connector[2].Value = "CB" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+  
+REM Change SEB to SE
+   
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "SEB" and Item.Connector[3].Value = "SEB" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "SEB" and Item.Connector[2].Value = "SEB" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+       
+ END IF
+
+REM ------------------Script 6---------------------------
+REM AB-Duct
+REM -----------------------------------------------------
+
+SELECT ITEM.CID
+CASE=866
+if Item.dims = 3 then
+if Item.cuttype="Decoiled Straight" then
+Dim A = item.dim[1].value
+Dim B = item.dim[2].value
+Dim Prim = (A+B)
+Dim type="4xI,M-F"
+
+ if Prim < 64.5 then
+  item.option["Override"].value = "1 Part Straight"
+  Elseif Prim < 130 then
+    item.option["Override"].value = "2xL"
+  Elseif Prim < 258 then
+    item.option["Override"].value = type
+  endif
+ 
+if B > A then
+ item.dim[1].value = B
+ item.dim[2].value = A
+item.update()
+endif
+
+
+
+endif
+endif
+
+
+item.update()
+ENDSELECT

@@ -1,0 +1,20 @@
+REM ------------------Script---------------------------
+REM Shoe Tap Over Size Change
+REM ---------------------------------------------------
+
+REM Change Shoe Tap to 4 piece when over 118"
+
+SELECT ITEM.CID
+CASE=7
+
+Dim A = item.dim[1].value
+Dim B = item.dim[2].value
+Dim Prim = (A+B+A+13)
+
+	IF Prim > 118 then
+  	   Item.Option["2 Parts"].value = "No"
+	ENDIF
+
+
+Item.Update()
+ENDSELECT

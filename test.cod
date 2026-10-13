@@ -1,0 +1,17 @@
+rem Define the process to use
+dim InsulationProcess = "Nest_Insulation_Along_Length"
+
+rem Iterate through all selected items in the job
+for each item in task.selection
+
+rem Check if the item is insulation
+  if item.material.name.equals("Insulation") then
+    
+rem Set the item to use the specified process
+    item.process.name = InsulationProcess
+    item.update
+  end if
+next
+
+rem Trigger nesting with the new process
+task.nesting.run()

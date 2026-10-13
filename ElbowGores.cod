@@ -1,0 +1,17 @@
+SELECT Item.CID
+  Case 61
+  DIM gores=2
+  DIM angle=item.dim["angle"].value
+    SELECT Angle
+      Case <=40
+        gores=2
+      Case <=60
+        gores=3
+      Case <=90
+        gores=4
+      Case <=180
+        gores=8
+    END SELECT
+  Item.Option["number of segments"].Value=gores
+  Item.Update()
+END SELECT

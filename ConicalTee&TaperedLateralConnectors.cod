@@ -1,0 +1,56 @@
+REM ------------------Script---------------------------
+REM Change Conical and Tapered Body Connectors
+REM ---------------------------------------------------
+
+REM Change Tapered Body connectors to right format
+
+Select Item.CID
+  Case 53
+
+    If Item.Connector[1].Value <> "DuraFlange" Then
+        Item.Connector[1].Value = "SE Collar"
+		Item.Connector[1].Locked = TRUE
+    End If
+
+    If Item.Connector[2].Value <> "DuraFlange" Then
+        Item.Connector[2].Value = "SE Collar"
+		Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Connector[3].Value <> "DuraFlange" And Item.Connector[3].Value <> "Raw" Then
+        Item.Connector[3].Value = "SE"
+		Item.Connector[3].Locked = TRUE
+    End If
+
+End Select
+
+REM Change Conical Tee connectors to right format
+
+Select Item.CID
+  Case 891
+
+    If Item.Dim[4].Value > 0 And Item.Connector[1].Value <> "DuraFlange" And Item.Connector[1].Value <> "Duraflange-Coll" Then
+        Item.Connector[1].Value = "Raw"
+		Item.Connector[2].Value = "SE Collar"
+		Item.Connector[1].Locked = TRUE
+		Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Dim[4].Value = 0 And Item.Connector[1].Value <> "DuraFlange" And Item.Connector[1].Value <> "Duraflange-Coll" Then
+        Item.Connector[1].Value = "SE"
+		Item.Connector[2].Value = "SE"
+		Item.Connector[1].Locked = TRUE
+		Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Dim[4].Value > 0 And Item.Connector[2].Value <> "DuraFlange" And Item.Connector[2].Value <> "Duraflange-Coll" Then
+		Item.Connector[2].Value = "SE Collar"
+		Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Connector[3].Value <> "DuraFlange" And Item.Connector[3].Value <> "Raw" Then
+        Item.Connector[3].Value = "SE Collar"
+		Item.Connector[3].Locked = TRUE
+    End If
+
+End Select

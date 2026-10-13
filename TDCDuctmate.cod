@@ -1,0 +1,6 @@
+select item.CID
+case 8
+if item.connector[1].value="TDC" then
+item.connector[1].value="Ductmate"
+end if
+end select

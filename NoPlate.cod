@@ -1,0 +1,11 @@
+REM Disable cutting on all pattern developments for Conical Saddle Tap (CID 751)
+
+DIM iItem, iPattern
+
+FOR iItem = 1 TO Items
+    IF CID(iItem) = 751 THEN
+        FOR iPattern = 1 TO ItemDevelopCount(iItem)
+            ItemDevelopOption(iItem, iPattern, "Cut") = FALSE
+        NEXT
+    END IF
+NEXT

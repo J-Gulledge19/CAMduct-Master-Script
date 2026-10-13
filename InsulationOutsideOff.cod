@@ -1,0 +1,3 @@
+if item.insulation.status="outside" then
+item.insulation.status="off"
+end if

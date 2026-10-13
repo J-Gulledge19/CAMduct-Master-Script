@@ -1,0 +1,21 @@
+REM -----------------------------------------------------
+REM Change to Weld if Seam is Weld Cut .5
+REM -----------------------------------------------------
+
+ 
+  IF Item.Seam[1] <> NULL THEN
+     IF Item.Seam[1].Value = "Weld Cut .5" THEN
+        Item.Seam[1].Value = "Weld"
+        Item.Seam[1].Locked = TRUE
+     END IF
+  END IF
+ 
+  IF Item.Seam[2] <> NULL THEN
+     IF Item.Seam[2].Value = "Weld Cut .5" THEN
+        Item.Seam[2].Value = "Weld"
+        Item.Seam[2].Locked = TRUE
+     END IF
+  END IF
+
+
+

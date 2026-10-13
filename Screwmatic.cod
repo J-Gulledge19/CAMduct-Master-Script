@@ -1,0 +1,50 @@
+REM -----------------------------------------------------
+REM Change TDC to Screwmatic TDC
+REM -----------------------------------------------------
+
+IF Item.Connectors THEN
+
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "TDC" THEN
+     Item.Connector[1].Value = "Screwmatic TDC"
+     Item.Connector[1].Locked = TRUE
+     END IF
+   END IF
+
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "TDC" THEN
+     Item.Connector[2].Value = "Screwmatic TDC"
+     Item.Connector[2].Locked = TRUE
+     END IF
+   END IF
+
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "TDF" THEN
+     Item.Connector[1].Value = "Screwmatic TDC"
+     Item.Connector[1].Locked = TRUE
+     END IF
+   END IF
+
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "TDF" THEN
+     Item.Connector[2].Value = "Screwmatic TDC"
+     Item.Connector[2].Locked = TRUE
+     END IF
+   END IF
+
+    IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "Ductmate" THEN
+     Item.Connector[1].Value = "Ductmate Screwmatic"
+     Item.Connector[1].Locked = TRUE
+     END IF
+   END IF
+
+    IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "Ductmate" THEN
+     Item.Connector[2].Value = "Ductmate Screwmatic"
+     Item.Connector[2].Locked = TRUE
+     END IF
+   END IF
+
+
+END IF

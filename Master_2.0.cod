@@ -1,0 +1,719 @@
+REM ------------------Script 1---------------------------
+REM Change Outside Insulation Status Off
+REM -----------------------------------------------------
+
+IF Item.Insulation.Status="outside" THEN
+   Item.Insulation.Status="off"
+END IF
+
+
+REM ------------------Script 2---------------------------
+REM Change to LargePitts if over 22G
+REM -----------------------------------------------------
+
+IF Item.Gauge > .0312 THEN
+ 
+  IF Item.Seam[1] <> NULL THEN
+     IF Item.Seam[1].Value = "Small Pits" THEN
+        Item.Seam[1].Value = "Large Pits"
+        Item.Seam[1].Locked = TRUE
+     END IF
+  END IF
+ 
+  IF Item.Seam[2] <> NULL THEN
+     IF Item.Seam[2].Value = "Small Pits" THEN
+        Item.Seam[2].Value = "Large Pits"
+        Item.Seam[2].Locked = TRUE
+     END IF
+  END IF
+
+Item.Update()
+
+END IF
+
+
+REM ------------------Script 3---------------------------
+REM Update Gore Count Based on Angle
+REM -----------------------------------------------------
+
+SELECT Item.CID
+  Case 61
+  DIM gores=2
+  DIM angle=item.dim["angle"].value
+    SELECT Angle
+      Case <=40
+        gores=2
+      Case <=60
+        gores=3
+      Case <=90
+        gores=4
+      Case <=120
+        gores=6
+      Case <=180
+        gores=8
+    END SELECT
+  Item.Option["number of segments"].Value=gores
+  Item.Update()
+END SELECT
+
+REM ------------------Script 4---------------------------
+REM Change Spiral & Ductmate to boughtout
+REM -----------------------------------------------------
+
+SELECT Item.CID
+  Case 40, 1001
+
+  IF Item.Boughtout = FALSE THEN
+     Item.Boughtout = TRUE
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 5---------------------------
+REM Change Same Connectors to SE
+REM -----------------------------------------------------
+
+SELECT Item.CID
+ Case 61, 68
+
+REM Change Collar to SE
+	
+ IF Item.Connectors THEN 
+
+REM Change None to SE
+
+   IF Item.Connector[2].Value and Item.Connector[3].Value = "None" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+        Item.Connector[2].Locked = True
+        Item.Connector[3].Locked = True	
+   END IF
+
+   IF Item.Connector[1] and Item.Connector[2] = "None" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+        Item.Connector[1].Locked = True
+        Item.Connector[2].Locked = True	
+   END IF
+
+REM Change CR to SE
+
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN
+     IF Item.Connector[2].Value = "CR" and Item.Connector[3].Value = "CR" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+ 
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN
+     IF Item.Connector[1].Value = "CR" and Item.Connector[2].Value = "CR" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+ 
+REM Change CB to SE
+ 
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN
+     IF Item.Connector[2].Value = "CB" and Item.Connector[3].Value = "CB" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+ 
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN
+     IF Item.Connector[1].Value = "CB" and Item.Connector[2].Value = "CB" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+ 
+REM Change SEB to SE
+ 
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN
+     IF Item.Connector[2].Value = "SEB" and Item.Connector[3].Value = "SEB" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+ 
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN
+     IF Item.Connector[1].Value = "SEB" and Item.Connector[2].Value = "SEB" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+ 
+ END IF
+
+END SELECT
+
+REM ------------------Script 6---------------------------
+REM Change Single Connectors to SE
+REM -----------------------------------------------------
+
+SELECT Item.CID
+ Case 16, 875
+ 
+REM Change CR to SE
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "CR" THEN
+        Item.Connector[1].Value = "SE"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "CR" THEN
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "CR" THEN
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+ 
+REM Change CB to SE
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "CB" THEN
+        Item.Connector[1].Value = "SE"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "CB" THEN
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "CB" THEN
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+ 
+REM Change SEB to SE
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "SEB" THEN
+        Item.Connector[1].Value = "SE"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "SEB" THEN
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "SEB" THEN
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 7---------------------------
+REM Change Single Connectors to SE Collar
+REM -----------------------------------------------------
+
+SELECT Item.CID
+ Case 751, 345, 871, 24, 8, 162, 60, 71
+
+IF Item.Dim["Collar"] THEN
+   Item.Dim["Collar"].Value = 3
+END IF
+ 
+REM Change CR to SE Collar
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "CR" THEN
+        Item.Connector[1].Value = "SE Collar"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "CR" THEN
+        Item.Connector[2].Value = "SE Collar"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "CR" THEN
+        Item.Connector[3].Value = "SE Collar"
+     END IF
+   END IF
+ 
+REM Change CB to SE Collar
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "CB" THEN
+        Item.Connector[1].Value = "SE Collar"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "CB" THEN
+        Item.Connector[2].Value = "SE Collar"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "CB" THEN
+        Item.Connector[3].Value = "SE Collar"
+     END IF
+   END IF
+ 
+REM Change SEB to SE Collar
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "SEB" THEN
+        Item.Connector[1].Value = "SE Collar"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "SEB" THEN
+        Item.Connector[2].Value = "SE Collar"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "SEB" THEN
+        Item.Connector[3].Value = "SE Collar"
+     END IF
+   END IF
+
+REM Change Collar to SE Collar
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "Collar" THEN
+        Item.Connector[1].Value = "SE Collar"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "Collar" THEN
+        Item.Connector[2].Value = "SE Collar"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "Collar" THEN
+        Item.Connector[3].Value = "SE Collar"
+     END IF
+   END IF
+ 
+REM Change CS Collar to SE Collar
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "CS Collar" THEN
+        Item.Connector[1].Value = "SE Collar"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "CS Collar" THEN
+        Item.Connector[2].Value = "SE Collar"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "CS Collar" THEN
+        Item.Connector[3].Value = "SE Collar"
+     END IF
+   END IF
+
+REM Change SE to SE Collar
+ 
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "SE" THEN
+        Item.Connector[1].Value = "SE Collar"
+     END IF
+   END IF
+ 
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "SE" THEN
+        Item.Connector[2].Value = "SE Collar"
+     END IF
+   END IF
+
+   IF Item.Connector[3] <> NULL THEN
+     IF Item.Connector[3].Value = "SE" THEN
+        Item.Connector[3].Value = "SE Collar"
+     END IF
+   END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 8---------------------------
+REM Change Body Length on Fittings with SE Collar
+REM -----------------------------------------------------
+
+SELECT Item.CID
+ Case 751, 345, 871, 24, 8, 162
+
+IF Item.Connector[1] <> NULL THEN
+   IF Item.Connector[1].Value = "SE Collar" THEN
+      Item.Dim["Length"].Value = Item.Dim["Length"].Value - 1.5
+   END IF
+END IF
+
+IF Item.Connector[2] <> NULL THEN
+   IF Item.Connector[2].Value = "SE Collar" THEN
+      Item.Dim["Length"].Value = Item.Dim["Length"].Value - 1.5
+   END IF
+END IF
+
+IF Item.Connector[3] <> NULL THEN
+   IF Item.Connector[3].Value = "SE Collar" THEN
+      Item.Dim["Branch Length"].Value = Item.Dim["Branch Length"].Value - 1.5
+   END IF
+END IF
+
+Item.Update()
+
+END SELECT
+
+
+REM ------------------Script 9---------------------------
+REM Change Gauge on Square to Round from 26G to 24G
+REM -----------------------------------------------------
+
+SELECT ITEM.CID
+CASE=8
+
+IF Item.Gauge < .0276 THEN
+   Item.Gauge = .0276
+END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 10--------------------------
+REM AB-Duct
+REM -----------------------------------------------------
+
+SELECT ITEM.CID
+CASE=866
+if Item.dims = 3 then
+if Item.cuttype="Decoiled Straight" then
+Dim A = item.dim[1].value
+Dim B = item.dim[2].value
+Dim Prim = (A+B)
+Dim type="4xI,M-F"
+
+ if Prim < 64.5 then
+  item.option["Override"].value = "1 Part Straight"
+  Elseif Prim < 130 then
+    item.option["Override"].value = "2xL"
+  Elseif Prim < 258 then
+    item.option["Override"].value = type
+  endif
+ 
+if B > A then
+ item.dim[1].value = B
+ item.dim[2].value = A
+item.update()
+endif
+
+endif
+endif
+
+item.update()
+ENDSELECT
+
+REM ------------------Script 11------------------------
+REM Activity Numbers
+REM ---------------------------------------------------
+
+REM Change Acitivity Numbers For Rec Fittings
+
+SELECT Item.CID
+ Case 17, 399, 37, 3, 13, 20, 14, 11, 2, 330, 328, 8, 7, 818, 12, 30, 31, 324, 848, 151, 862, 382, 866
+
+  Item.CustomData["Activity #"].value = 20010110
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Rnd Fittings
+
+SELECT Item.CID
+ Case 61, 97, 162, 68, 380, 16, 875, 345, 751, 60, 16, 71, 24, 871, 100, 41, 856, 1112, 160, 891, 53
+
+  Item.CustomData["Activity #"].value = 20010310
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Spiral Pipe
+
+SELECT Item.CID
+ Case 40
+
+  Item.CustomData["Activity #"].value = 20010301
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Decoiled Straight
+
+SELECT Item.CID
+ Case 866
+
+  If Item.CutType = "Decoiled Straight" THEN
+
+    Item.CustomData["Activity #"].value = 20010101
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For MVD Windgate (Nylon Bushing)
+
+SELECT Item.CID
+ Case 41
+
+  If Item.Alias = "MVD" THEN
+
+    Item.CustomData["Activity #"].value = 20010842
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Rectangular MVD
+
+SELECT Item.CID
+ Case 866
+
+  If Item.Description = "Rectangular MVD" THEN
+
+    Item.CustomData["Activity #"].value = 20010842
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Round Canvas
+
+SELECT Item.CID
+ Case 555
+
+  Item.CustomData["Activity #"].value = 20010307
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Rec Canvas
+
+SELECT Item.CID
+ Case 166
+
+  Item.CustomData["Activity #"].value = 20010107
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Number to Null For Flat Stock
+
+SELECT Item.CID
+ Case 31
+
+  If Item.Description = "Flat Stock" THEN
+
+    Item.CustomData["Activity #"].value = " "
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 12---------------------------
+REM Change Rnd Seam from Acmelock to 1/2" Lap Female
+REM ------------------------------------------------------
+
+SELECT Item.CID
+  Case 68
+
+  IF Item.Seam[1].Value = "Acmelock" THEN
+     Item.Seam[1].Value = "1/2 Lap Female"
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 13--------------------------
+REM TDC Square to Round
+REM -----------------------------------------------------
+
+REM Change square to round connector from duct mate to tdc
+
+SELECT ITEM.CID
+CASE=8
+
+	IF Item.Connector[1].Value = "Ductmate" THEN
+           Item.Connector[1].Value = "TDC"
+	   Item.Update()
+	END IF
+
+	IF Item.Connector[1].Value = "TDC" or Item.Connector[1].Value = "Screwmatic TDC" THEN
+           Item.Option["Cross Break"].Value = "4"
+	END IF
+
+	IF Item.Option["Cross Break"].Value = "4" THEN
+           Item.Option["Seam Position"].Value = "Corner"
+	END IF
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 14--------------------------
+REM Shoe Tap Over Size Change
+REM -----------------------------------------------------
+
+REM Change Shoe Tap to 4 piece when over 118"
+
+SELECT ITEM.CID
+CASE=7
+
+Dim A = item.dim[1].value
+Dim B = item.dim[2].value
+Dim Prim = (A+B+A+13)
+
+	IF Prim > 118 then
+  	   Item.Option["2 Parts"].value = "No"
+	ENDIF
+
+
+Item.Update()
+ENDSELECT
+
+REM ------------------Script 15--------------------------
+REM Change Round Endcap Bought Out/Adjust Size for Duraflange
+REM -----------------------------------------------------
+
+REM Change Round End Cap to boughtout if its 16" Diameter or less
+REM Add .375 to Diameter for anything over 16" round for Duraflange
+
+SELECT Item.CID
+  Case 60
+
+	IF Item.Dim[1].Value <= 16 THEN
+           Item.Boughtout = TRUE
+	END IF
+
+	IF Item.Dim[1].Value > 16 and Item.Connector[1].Value <> "Duraflange-Coll" Then
+	   Item.Dim[1].Value = Item.Dim[1].Value + .375
+	END IF
+
+
+Item.Update()
+
+END SELECT
+
+REM ------------------Script 16--------------------------
+REM Change Conical and Tapered Body Connectors
+REM -----------------------------------------------------
+
+REM Change Tapered Body connectors to right format
+
+Select Item.CID
+  Case 53
+
+    If Item.Connector[1].Value <> "DuraFlange" Then
+        Item.Connector[1].Value = "SE Collar"
+		Item.Connector[1].Locked = TRUE
+    End If
+
+    If Item.Connector[2].Value <> "DuraFlange" Then
+        Item.Connector[2].Value = "SE Collar"
+		Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Connector[3].Value <> "DuraFlange" And Item.Connector[3].Value <> "Raw" Then
+        Item.Connector[3].Value = "SE"
+		Item.Connector[3].Locked = TRUE
+    End If
+
+End Select
+
+REM Change Conical Tee connectors to right format
+
+Select Item.CID
+  Case 891
+
+    If Item.Dim[4].Value > 0 And Item.Connector[1].Value <> "DuraFlange" And Item.Connector[1].Value <> "Duraflange-Coll" Then
+        Item.Connector[1].Value = "Raw"
+		  Item.Connector[2].Value = "SE Collar"
+		  Item.Connector[1].Locked = TRUE
+		  Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Dim[4].Value = 0 And Item.Connector[1].Value <> "DuraFlange" And Item.Connector[1].Value <> "Duraflange-Coll" Then
+        Item.Connector[1].Value = "SE"
+		  Item.Connector[2].Value = "SE"
+		  Item.Connector[1].Locked = TRUE
+		  Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Dim[4].Value > 0 And Item.Connector[2].Value <> "DuraFlange" And Item.Connector[2].Value <> "Duraflange-Coll" Then
+		 Item.Connector[2].Value = "SE Collar"
+		 Item.Connector[2].Locked = TRUE
+    End If
+
+    If Item.Connector[3].Value <> "DuraFlange" And Item.Connector[3].Value <> "Raw" Then
+        Item.Connector[3].Value = "SE Collar"
+		  Item.Connector[3].Locked = TRUE
+    End If
+
+End Select
+
+REM ------------------Script 17-------------------------
+REM Change Rec End Cap Connectors
+REM ----------------------------------------------------
+
+REM Change connector MachCap Run To Run Cap .5
+
+Select Item.CID
+	Case 12 
+	
+		If Item.Connector[1].Value = "MachCap Run" Then 
+			Item.Connector[1].Value = "Run Cap .5"
+		
+		ElseIF Item.Connector[1].Value = "MachCap Joint 1.5" Then 
+			Item.Connector[1].Value = "1 1/2 Mach Cap"
+
+		ElseIf ITEM.Connector[1].Value = "End Cap 1.5" Then
+			ITEM.Connector[1].Value = "1 1/2 Mach Cap"
+		End If
+		
+	Item.Update()
+
+End Select

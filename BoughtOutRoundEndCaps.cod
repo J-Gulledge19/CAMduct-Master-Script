@@ -1,0 +1,22 @@
+REM ------------------Script---------------------------
+REM Change Round Endcap Bought Out/Adjust Size for Duraflange
+REM ---------------------------------------------------
+
+REM Change Round End Cap to boughtout if its 16" Diameter or less
+REM Add .375 to Diameter for anything over 16" round for Duraflange
+
+SELECT Item.CID
+  Case 60
+
+	IF Item.Dim[1].Value <= 16 THEN
+           Item.Boughtout = TRUE
+	END IF
+
+	IF Item.Dim[1].Value > 16 Then
+	   Item.Dim[1].Value = Item.Dim[1].Value + .375
+	END IF
+
+
+Item.Update()
+
+END SELECT

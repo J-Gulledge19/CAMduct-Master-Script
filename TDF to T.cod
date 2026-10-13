@@ -1,0 +1,19 @@
+REM -----------------------------------------------------
+REM Change TDF to TDC
+REM -----------------------------------------------------
+
+IF Item.Connectors THEN
+
+   IF Item.Connector[1] <> NULL THEN
+     IF Item.Connector[1].Value = "TDF" THEN
+     Item.Connector[1].Value = "TDC"
+     END IF
+   END IF
+
+   IF Item.Connector[2] <> NULL THEN
+     IF Item.Connector[2].Value = "TDF" THEN
+     Item.Connector[2].Value = "TDC"
+     END IF
+   END IF
+
+END IF

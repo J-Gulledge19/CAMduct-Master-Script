@@ -1,0 +1,22 @@
+REM ------------------Script--------------------------
+REM Change Rec End Cap Connectors
+REM --------------------------------------------------
+
+REM Change connector MachCap Run To Run Cap .5
+
+Select Item.CID
+	Case 12 
+	
+		If Item.Connector[1].Value = "MachCap Run" Then 
+			Item.Connector[1].Value = "Run Cap .5"
+		
+		ElseIF Item.Connector[1].Value = "MachCap Joint 1.5" Then 
+			Item.Connector[1].Value = "1 1/2 Mach Cap"
+
+		ElseIf ITEM.Connector[1].Value = "End Cap 1.5" Then
+			ITEM.Connector[1].Value = "1 1/2 Mach Cap"
+		End If
+		
+	Item.Update()
+
+End Select

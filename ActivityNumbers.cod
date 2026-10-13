@@ -1,0 +1,121 @@
+REM ------------------Script---------------------------
+REM Activity Numbers
+REM ---------------------------------------------------
+
+REM Change Acitivity Numbers For Rec Fittings
+
+SELECT Item.CID
+ Case 17, 399, 37, 3, 13, 20, 14, 11, 2, 330, 328, 8, 7, 818, 12, 30, 31, 324, 848, 151, 862, 382, 866
+
+  Item.CustomData["Activity #"].value = 20010110
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Rnd Fittings
+
+SELECT Item.CID
+ Case 61, 97, 162, 68, 380, 16, 875, 345, 751, 60, 16, 71, 24, 871, 100, 41, 856, 1112, 160, 891, 53
+
+  Item.CustomData["Activity #"].value = 20010310
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Spiral Pipe
+
+SELECT Item.CID
+ Case 40
+
+  Item.CustomData["Activity #"].value = 20010301
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Decoiled Straight
+
+SELECT Item.CID
+ Case 866
+
+  If Item.CutType = "Decoiled Straight" THEN
+
+    Item.CustomData["Activity #"].value = 20010101
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For MVD Windgate (Nylon Bushing)
+
+SELECT Item.CID
+ Case 41
+
+  If Item.Alias = "MVD" THEN
+
+    Item.CustomData["Activity #"].value = 20010842
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Rectangular MVD
+
+SELECT Item.CID
+ Case 866
+
+  If Item.Description = "Rectangular MVD" THEN
+
+    Item.CustomData["Activity #"].value = 20010842
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Round Canvas
+
+SELECT Item.CID
+ Case 555
+
+  Item.CustomData["Activity #"].value = 20010307
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Numbers For Rec Canvas
+
+SELECT Item.CID
+ Case 166
+
+  Item.CustomData["Activity #"].value = 20010107
+
+Item.Update()
+
+END SELECT
+
+REM Change Acitivity Number to Null For Flat Stock
+
+SELECT Item.CID
+ Case 31
+
+  If Item.Description = "Flat Stock" THEN
+
+    Item.CustomData["Activity #"].value = " "
+
+  END IF
+
+Item.Update()
+
+END SELECT
+
+
+

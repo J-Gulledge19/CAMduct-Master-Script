@@ -1,0 +1,17 @@
+
+  REM Only act if the item has a liner
+  IF item.Insulation THEN
+
+    REM Set grain direction angle to 0,0
+    item.Insulation.GrainAngleX = 90
+    item.Insulation.GrainAngleY = 90
+
+    REM Optional: Set item angle to 0
+    item.Angle = 0
+
+    REM Feedback to script console
+    debug.print "Item " & i & " liner grain set to 0,0"
+
+  END IF
+
+NEXT

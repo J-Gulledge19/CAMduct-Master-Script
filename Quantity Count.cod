@@ -1,0 +1,89 @@
+Dim i = 1
+Dim j = 1
+
+Dim objItem = 0
+Dim objCheck = 0
+
+Dim totalQty = 0
+Dim isFirst = 1
+
+While i <= Task.Selection.Count
+
+    objItem = Task.Selection[i]
+
+    totalQty = 0
+    isFirst = 1
+
+    REM ----------------------------
+    REM Check FIRST occurrence only
+    REM ----------------------------
+    j = 1
+
+    While j <= Task.Selection.Count
+
+        objCheck = Task.Selection[j]
+
+        If objCheck.Number = objItem.Number Then
+
+            If j < i Then
+                isFirst = 0
+            End If
+
+        End If
+
+        j = j + 1
+
+    End While
+
+    REM ----------------------------
+    REM Only process if first item
+    REM ----------------------------
+    If isFirst = 1 Then
+
+        REM ----------------------------
+        REM Sum all quantities
+        REM ----------------------------
+        j = 1
+
+        While j <= Task.Selection.Count
+
+            objCheck = Task.Selection[j]
+
+            If objCheck.Number = objItem.Number Then
+                totalQty = totalQty + objCheck.Qty
+            End If
+
+            j = j + 1
+
+        End While
+
+        objItem.Qty = totalQty
+        objItem.Update()
+
+        REM ----------------------------
+        REM Zero all duplicates
+        REM ----------------------------
+        j = 1
+
+        While j <= Task.Selection.Count
+
+            objCheck = Task.Selection[j]
+
+            If objCheck.Number = objItem.Number Then
+
+                If j <> i Then
+                    objCheck.Qty = 0
+                    objCheck.Update()
+                End If
+
+            End If
+
+            j = j + 1
+
+        End While
+
+    End If
+
+    i = i + 1
+
+End While

@@ -1,0 +1,71 @@
+REM -----------------------------------------------------
+REM Change Same Connectors to SE
+REM -----------------------------------------------------
+
+REM Change Collar to SE
+
+IF Item.Connectors THEN
+
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "Collar" and Item.Connector[3].Value = "Collar" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "Collar" and Item.Connector[2].Value = "Collar" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+   
+REM Change CR to SE
+   
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "CR" and Item.Connector[3].Value = "CR" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "CR" and Item.Connector[2].Value = "CR" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+   
+REM Change CB to SE
+   
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "CB" and Item.Connector[3].Value = "CB" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "CB" and Item.Connector[2].Value = "CB" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+  
+REM Change SEB to SE
+   
+   IF Item.Connector[2] and Item.Connector[3] <> NULL THEN   
+     IF Item.Connector[2].Value = "SEB" and Item.Connector[3].Value = "SEB" THEN
+        Item.Connector[2].Value = "SE"
+        Item.Connector[3].Value = "SE"
+     END IF
+   END IF
+   
+   IF Item.Connector[1] and Item.Connector[2] <> NULL THEN   
+     IF Item.Connector[1].Value = "SEB" and Item.Connector[2].Value = "SEB" THEN
+        Item.Connector[1].Value = "SE"
+        Item.Connector[2].Value = "SE"
+     END IF
+   END IF
+       
+END IF
